@@ -4,7 +4,7 @@ const app = express()
 app.use(express.json())
 
 app.get("/", (_req, res) => {
-    res.send("Hello world " + new Date().toDateString())
+  res.send("Hello world")
 })
 
 const PUERTO = process.env.PORT || 3000;
