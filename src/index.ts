@@ -3,8 +3,8 @@ import express from "express"
 const app = express()
 app.use(express.json())
 
-app.get("/", (req, res) => {
-    res.send("Hello world")
+app.get("/", (_req, res) => {
+    res.send("Hello world " + new Date().toDateString())
 })
 
 const PUERTO = process.env.PORT || 3000;
