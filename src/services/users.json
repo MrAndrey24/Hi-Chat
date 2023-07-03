@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "password": "secretpassword"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "janesmith@example.com",
+      "password": "password123"
+    },
+    {
+      "id": 3,
+      "name": "Bob Johnson",
+      "email": "bobjohnson@example.com",
+      "password": "qwerty123"
+    },
+    {
+      "id": 4,
+      "name": "Alice Williams",
+      "email": "alicewilliams@example.com",
+      "password": "letmein"
+    },
+    {
+      "id": 5,
+      "name": "Sam Brown",
+      "email": "sambrown@example.com",
+      "password": "abc123"
+    }
+  ]
+  
