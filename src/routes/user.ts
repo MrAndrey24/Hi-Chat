@@ -11,9 +11,7 @@ router.get("/",(_req, res) => {
     res.send(userServices.getUser())
 })
 
-router.post("/",[  body("name").isString(),
-body("email").isEmail(),
-body("password").isString().isLength({ min: 5})],(req: Request, res: Response) => {
+router.post("/",[  body("name").isString(),body("email").isEmail(),body("password").isString().isLength({ min: 5})],(req: Request, res: Response) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
         return res.status(400).json({ errors: errors.array() });
