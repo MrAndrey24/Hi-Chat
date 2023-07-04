@@ -2,8 +2,6 @@ import express, { Request, Response } from 'express';
 import { body, validationResult } from "express-validator";
 import * as userServices from "../services/userServices"
 import { User } from '../models/user';
-// import { registerSchema } from '../schema/register-schema';
-// import { validateRequestSchema } from '../middleware/validate-rquest-schema';
 
 const router = express.Router();
 
