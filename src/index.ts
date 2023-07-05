@@ -2,7 +2,6 @@ import express from "express"
 import dotenv from "dotenv"
 import userRouter from "./routes/user"
 import mongoose from "mongoose"
-import { error } from "console"
 
 const app = express()
 app.use(express.json())

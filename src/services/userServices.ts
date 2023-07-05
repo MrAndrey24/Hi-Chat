@@ -9,7 +9,7 @@ export const getUser = async (): Promise<User[]> => {
     }
 }
 
-export const getUserById = async (id: number): Promise<User | null> => {
+export const getUserById = async (id: string): Promise<User | null> => {
     try{
         const user = await UserModel.findById(id);
         return user
@@ -28,7 +28,7 @@ export const addUser = async (newUser: User): Promise<User> => {
     }
 }
 
-export const updateUser = async (userId: number, updatedUser: Partial<User>): Promise<User | null> => {
+export const updateUser = async (userId: string, updatedUser: Partial<User>): Promise<User | null> => {
     try{
         const updateUser = UserModel.findByIdAndUpdate(userId, updatedUser, {new: true})
         return updateUser
