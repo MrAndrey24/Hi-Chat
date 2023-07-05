@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body, param, validationResult } from "express-validator";
 import * as userServices from "../services/userServices"
-import { User } from '../models/user';
+import { User, UserModel } from '../models/user';
 
 const router = express.Router();
 
@@ -28,20 +28,33 @@ router.get("/:id", param("id").isNumeric(), async (req: Request, res: Response) 
 })
 
 
-router.post("/",[body("name").isString(),body("email").isEmail(),body("password").isString().isLength({ min: 5})], async (req: Request, res: Response) => {
+router.post("/",[body("name").isString().notEmpty(),body("email").isEmail().notEmpty(),body("password").isString().notEmpty().isLength({ min: 5})], async (req: Request, res: Response) => {
+
     const errors = validationResult(req)
     if(!errors.isEmpty()){
         return res.status(400).json({ errors: errors.array() })
     }
 
-    const {name, email, password} = req.body as User
-    const newUserEntry = await userServices.addUser({
-    name,
-    email,
-    password
+    const newUser = new UserModel({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
     })
-        
-    res.json(newUserEntry)
+
+    try{
+        const savedUser = await userServices.addUser(newUser)
+        res.json(savedUser)
+        return
+    }catch(error){
+        if (error === 11000) {
+            // This error code means that the `name` or `email` field is already taken.
+            return res.status(400).json({ error: error });
+        } else {
+            // This is an unexpected error.
+            return res.status(500).json({ error: error });
+        }
+    }
+
     return
 })
 
@@ -52,11 +65,19 @@ router.put("/:id",[param("id").isNumeric(), body("name").optional().isString(), 
     }
 
     const userId: number = parseInt(req.params.id)
-    const {name, email, password} = req.body as User
-    const userData = await userServices.updateUser(userId, {name, email, password})
-    if(userData){
-    res.json(userData)
+    const updatedUser = new UserModel({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    })
+
+    try{
+    const user = await userServices.updateUser(userId, updatedUser)
+    if(user){
+        res.json(user)
     }
+    }
+
     return
 })
 

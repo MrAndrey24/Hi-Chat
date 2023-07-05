@@ -1,33 +1,38 @@
-import { NewUserEntry, User } from "../models/user";
-import userData from "./users.json"
+import { User, UserModel } from "../models/user";
 
-const users: User[] = userData as User[];
-
-export const getUser = (): User[] => users
-
-export const getUserById = (id: number): User | null => {
-    const user = users.find(user => user.id === id);
-    return user ? user : null
+export const getUser = async (): Promise<User[]> => {
+    try{
+        const users = await UserModel.find();
+        return users
+    }catch(error){
+        throw new Error("Error getting user: " + error);
+    }
 }
 
-export const addUser = (newUserEntry: NewUserEntry): User => {
-    const newUser = {
-        id: Math.max(...userData.map(user => user.id)) + 1,
-        ...newUserEntry
+export const getUserById = async (id: number): Promise<User | null> => {
+    try{
+        const user = await UserModel.findById(id);
+        return user
+    }catch(error){
+        throw new Error("Error getting user: " + error);
     }
-
-    userData.push(newUser);
-    return newUser
 }
 
-export const updateUser = (userId: number, updatedUser: Partial<User>): User | null => {
-    const userIndex = users.findIndex(user => user.id === userId);
-    if(userIndex !== -1) {
-        const originalUser = userData[userIndex];
-        const updatedUserData = { ...originalUser, ...updatedUser}
-        userData[userIndex] = updatedUserData
-        return updatedUserData
+export const addUser = async (newUser: User): Promise<User> => {
+    try{
+        const createdUser = new UserModel(newUser)
+        const savedUser = await createdUser.save()
+        return savedUser
+    }catch(e){
+        throw new Error("Error adding user: " + e)
     }
+}
 
-    return null
+export const updateUser = async (userId: number, updatedUser: Partial<User>): Promise<User | null> => {
+    try{
+        const updateUser = UserModel.findByIdAndUpdate(userId, updatedUser, {new: true})
+        return updateUser
+    }catch(error){
+        throw new Error("Error updating user: " + error)
+    }
 }

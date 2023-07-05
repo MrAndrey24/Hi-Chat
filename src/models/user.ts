@@ -1,10 +1,15 @@
-import { type } from "os";
+import mongoose, { Schema, Document } from "mongoose";
 
-export interface User {
-    id: number,
+export interface User extends Document {
     name: string,
     email: string,
     password: string,
 }
 
-export type NewUserEntry = Omit<User, "id">
+const userSchema = new Schema<User>({
+    name: { type: String, required: true},
+    email: { type: String, required: true, unique: true},
+    password: { type: String, required: true}
+})
+
+export const UserModel = mongoose.model<User>("User", userSchema)
