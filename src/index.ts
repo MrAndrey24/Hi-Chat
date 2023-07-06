@@ -2,12 +2,14 @@ import express from "express"
 import dotenv from "dotenv"
 import userRouter from "./routes/user"
 import mongoose from "mongoose"
+import path from "path"
+import io from "socket.io"
 
 const app = express()
 app.use(express.json())
 
 app.get("/", (_req, res) => {
-  res.send("Hello world")
+  res.sendFile(path.join(__dirname, '/www', 'index.html'))
 })
 
 //Routers
