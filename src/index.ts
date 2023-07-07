@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/user";
 import mongoose from "mongoose";
 import path from "path";
-import { Server } from "socket.io"
+import { Server } from "socket.io";
 
 //Creating socket.io server
 const app = express();
@@ -12,7 +12,12 @@ const io = new Server(server);
 
 //Detects new connection and prints msg
 io.on('connection', (socket) => {
-  console.log('New socket')
+  console.log('New socket');
+
+  //Imprime message cuando el servidor recive un mensaje
+  socket.on('message', (message: string) => {
+    console.log(message);
+  });
 
   //On disconnect, print msg
   socket.on('disconnect', () => {
@@ -26,6 +31,10 @@ app.use(express.json());
 app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, '/www', 'index.html'));
 });
+
+app.get('/chat.js', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', '/www', '/ts', 'chat.js'));
+})
 
 //Routers
 app.use("/api/v1/users", userRouter);
