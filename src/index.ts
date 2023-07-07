@@ -10,11 +10,11 @@ const app = express();
 const server = require("http").createServer(app);
 const io = new Server(server);
 
-//Detects new connection and prints msg
+//Detects new connection and executes content
 io.on('connection', (socket) => {
   console.log('New socket');
 
-  //Imprime message cuando el servidor recive un mensaje
+  //Prints msg on emit('message')
   socket.on('message', (message: string) => {
     console.log(message);
   });
@@ -25,9 +25,7 @@ io.on('connection', (socket) => {
   });
 });
 
-app.use(express.json());
-
-//Shows index.html file when starting server
+//Shows index.html file as the default/home page
 app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, '/www', 'index.html'));
 });
@@ -35,6 +33,8 @@ app.get("/", (_req, res) => {
 app.get('/chat.js', (_req, res) => {
   res.sendFile(path.join(__dirname, '../dist', '/www', '/ts', 'chat.js'));
 })
+
+app.use(express.json());
 
 //Routers
 app.use("/api/v1/users", userRouter);
