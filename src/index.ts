@@ -14,9 +14,9 @@ const io = new Server(server);
 io.on('connection', (socket) => {
   console.log('New socket');
 
-  //Prints msg on emit('message')
-  socket.on('message', (message: string) => {
-    console.log(message);
+  //Prints msg on emit('message') in chat.js
+  socket.on('message', (message : string) => {
+    io.emit('messageFromServer', {message});
   });
 
   //On disconnect, print msg
@@ -30,6 +30,7 @@ app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, '/www', 'index.html'));
 });
 
+//When localhost:3000/chat.js, locate and send chat.js file
 app.get('/chat.js', (_req, res) => {
   res.sendFile(path.join(__dirname, '../dist', '/www', '/ts', 'chat.js'));
 })
