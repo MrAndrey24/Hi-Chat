@@ -11,10 +11,19 @@ export const getUser = async (): Promise<User[]> => {
 
 export const getUserById = async (id: string): Promise<User | null> => {
     try{
-        const user = await UserModel.findById(id);
+        const user = await UserModel.findOne({ _id: id });
         return user
     }catch(error){
         throw new Error("Error getting user: " + error);
+    }
+}
+
+export const getUserByEmail = async (email: string): Promise<User | null> => {
+    try{
+        const user = await UserModel.findOne({email: email})
+        return user
+    }catch(error){
+        throw new Error("Error getting email user: " + error);
     }
 }
 
@@ -30,8 +39,8 @@ export const addUser = async (newUser: User): Promise<User> => {
 
 export const updateUser = async (userId: string, updatedUser: Partial<User>): Promise<User | null> => {
     try{
-        const updateUser = UserModel.findByIdAndUpdate(userId, updatedUser, {new: true})
-        return updateUser
+        const user = await UserModel.findOneAndUpdate({ _id: userId}, {$set: updatedUser}, { new: true})
+        return user
     }catch(error){
         throw new Error("Error updating user: " + error)
     }
