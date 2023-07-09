@@ -16,7 +16,7 @@ app.use("/api/v1/users", userRouter)
 dotenv.config()
 
 const PUERTO = process.env.PORT || 3000;
-const url = `mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_USER_PASSWORD}@proyectocomponentes.jga5vk8.mongodb.net/?retryWrites=true&w=majority`
+const url = `mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_USER_PASSWORD}@hi-chat.iofmsjz.mongodb.net/?retryWrites=true&w=majority`
 
 const connectMongoDb = async () => {
   try{
