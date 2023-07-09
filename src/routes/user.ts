@@ -17,7 +17,7 @@ router.get("/:id", param("id").isString(), async (req: Request, res: Response) =
     }
 
     const userId: string = req.params.id
-    const user = await userServices.getUserByEmail(userId);
+    const user = await userServices.getUserById(userId);
     
     if (user) {
         res.send(user);
