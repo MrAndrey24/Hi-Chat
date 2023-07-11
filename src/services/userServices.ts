@@ -18,12 +18,13 @@ export const getUserById = async (id: string): Promise<User | null> => {
     }
 }
 
+
 export const getUserByEmail = async (email: string): Promise<User | null> => {
     try{
-        const user = await UserModel.findOne({email: email})
+        const user = await UserModel.findOne({ email: email });
         return user
     }catch(error){
-        throw new Error("Error getting email user: " + error);
+        throw new Error("Error getting user: " + error);
     }
 }
 

@@ -27,20 +27,21 @@ router.get("/:id", param("id").isString(), async (req: Request, res: Response) =
     return
 })
 
-router.get("/:email", param("email").isString(), async (req: Request, res: Response) => {
+
+router.get("/email/:email", param("email").isEmail(), async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
     }
 
     const userEmail: string = req.params.email
-    const user = await userServices.getUserByEmail(userEmail)
-    if(user){
+    const user = await userServices.getUserByEmail(userEmail);
+    
+    if (user) {
         res.send(user);
-    }else{
-        res.status(404).json({ message: "Email not found" })
+    } else {
+        res.status(404).json({ message: "User not found" })
     }
-
     return
 })
 
