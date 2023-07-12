@@ -11,7 +11,12 @@ class Chat {
 }
 
 function messageReceived(response : any){
-    console.log(response);
+    let parent = document.querySelector("#messages");
+
+    let child = document.createElement("li");
+
+    child.innerHTML = response.message;
+    parent?.appendChild(child);
 }
 
 let chat : Chat = new Chat(messageReceived);
