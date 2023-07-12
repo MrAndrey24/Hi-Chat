@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
 });
 //Shows index.html file as the default/home page
 app.get("/", (_req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '/www', 'index.html'));
+    res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'index.html'));
 });
 //When localhost:3000/chat.js, locate and send chat.js file
 app.get('/chat.js', (_req, res) => {
