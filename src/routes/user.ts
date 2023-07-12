@@ -104,4 +104,22 @@ router.put("/:id",[param("id").isString(), body("name").optional().isString(), b
 })
 
 
+router.post("/login", [body("email").isEmail().notEmpty(), body("password").isString().notEmpty()], async (req: Request, res: Response) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(400).json({ errors: errors.array() })
+    }
+
+    const {email, password} = req.body
+    const user = await userServices.userLogin(email, password)
+    if(user){
+        res.json(user)
+    }else{
+        res.status(404).json({ message: "User not found"})
+    }
+
+    return
+})
+
+
 export default router

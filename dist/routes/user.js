@@ -125,5 +125,20 @@ router.put("/:id", [(0, express_validator_1.param)("id").isString(), (0, express
     }
     return;
 }));
+router.post("/login", [(0, express_validator_1.body)("email").isEmail().notEmpty(), (0, express_validator_1.body)("password").isString().notEmpty()], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const errors = (0, express_validator_1.validationResult)(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { email, password } = req.body;
+    const user = yield userServices.userLogin(email, password);
+    if (user) {
+        res.json(user);
+    }
+    else {
+        res.status(404).json({ message: "User not found" });
+    }
+    return;
+}));
 exports.default = router;
 //# sourceMappingURL=user.js.map

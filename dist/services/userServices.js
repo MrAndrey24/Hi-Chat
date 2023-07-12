@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.addUser = exports.getUserByEmail = exports.getUserById = exports.getUser = void 0;
+exports.updateUser = exports.addUser = exports.userLogin = exports.getUserByEmail = exports.getUserById = exports.getUser = void 0;
 const user_1 = require("../models/user");
 const getUser = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -41,6 +41,16 @@ const getUserByEmail = (email) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getUserByEmail = getUserByEmail;
+const userLogin = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield user_1.UserModel.findOne({ email: email, password: password });
+        return user;
+    }
+    catch (error) {
+        throw new Error("Error getting user: " + error);
+    }
+});
+exports.userLogin = userLogin;
 const addUser = (newUser) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const createdUser = new user_1.UserModel(newUser);

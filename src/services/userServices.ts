@@ -28,6 +28,15 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
     }
 }
 
+export const userLogin = async (email: string, password: string): Promise<User | null> => {
+    try{
+        const user = await UserModel.findOne({ email: email, password: password });
+        return user
+    }catch(error){
+        throw new Error("Error getting user: " + error);
+    }
+}
+
 export const addUser = async (newUser: User): Promise<User> => {
     try{
         const createdUser = new UserModel(newUser)
