@@ -10,9 +10,12 @@ const app = express();
 const server = require("http").createServer(app);
 const io = new Server(server);
 
+var connections : any = [];
+
 //Detects new connection and executes content
 io.on('connection', (socket) => {
-  console.log('New socket');
+  connections.push(socket);
+  console.log('New socket: ' + connections.length + ' sockets connected.');
 
   //Prints msg on emit('message') in chat.js
   socket.on('message', (message : string) => {
@@ -21,7 +24,8 @@ io.on('connection', (socket) => {
 
   //On disconnect, print msg
   socket.on('disconnect', () => {
-    console.log('Socket disconnected');
+    connections.splice(connections.indexOf(socket), 1);
+    console.log('Socket disconnected: ' + connections.length + ' sockets connected.');
   });
 });
 
