@@ -23,6 +23,7 @@ const app = (0, express_1.default)();
 const server = require("http").createServer(app);
 const io = new socket_io_1.Server(server);
 var connections = [];
+var users = [];
 //Detects new connection and executes content
 io.on('connection', (socket) => {
     connections.push(socket);
@@ -39,11 +40,17 @@ io.on('connection', (socket) => {
 });
 //Shows index.html file as the default/home page
 app.get("/", (_req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'login.html'));
+});
+app.get('/index', (_req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'index.html'));
 });
 //When localhost:3000/chat.js, locate and send chat.js file
 app.get('/chat.js', (_req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../dist', '/www', '/ts', 'chat.js'));
+});
+app.get('/login.js', (_req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../dist', '/www', '/ts', 'login.js'));
 });
 app.use(express_1.default.json());
 //Routers

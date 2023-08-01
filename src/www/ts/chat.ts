@@ -11,11 +11,15 @@ class Chat {
 }
 
 function messageReceived(response : any){
+    const queryString = window.location.search;
+
+    const urlParams = new URLSearchParams(queryString);
+
     let parent = document.querySelector("#messages");
 
     let child = document.createElement("li");
 
-    child.innerHTML = response.message;
+    child.innerHTML = "<strong>" + urlParams.get('username') + ": </strong>" + response.message;
     parent?.appendChild(child);
 }
 
