@@ -19,6 +19,8 @@ function messageReceived(response : any){
 
     let child = document.createElement("li");
 
+    //TODO: Fix usernames on message display
+
     child.innerHTML = "<strong>" + urlParams.get('username') + ": </strong>" + response.message;
     parent?.appendChild(child);
 }
