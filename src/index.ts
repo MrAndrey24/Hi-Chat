@@ -10,23 +10,46 @@ const app = express();
 const server = require("http").createServer(app);
 const io = new Server(server);
 
-var connections : any = [];
-var users: any = [];
+const list_users: {[usernama: string]: string} = {};
 
 //Detects new connection and executes content
 io.on('connection', (socket) => {
-  connections.push(socket);
-  console.log('New socket: ' + connections.length + ' sockets connected.');
 
+  console.log('a user connected: ' + socket.id);
+
+  // login
+  socket.on('login', async ({ email, password }) => {
+    try{
+      const response = await fetch('http://localhost:3000/api/v1/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      if(response.ok){
+        const user = await response.json();
+        socket.emit('login', { user });
+      }
+      
+      const error = await response.json();
+      socket.emit('login', { error });
+    }catch(error){
+      console.log(error);
+    }
+  });
+  
   //Prints msg on emit('message') in chat.js
-  socket.on('message', (message : string) => {
-    io.emit('messageFromServer', {message});
+  socket.on('sendMessage', (message : string) => {
+    io.emit('sendMessage', {message});
   });
 
-  //On disconnect, print msg
+  // Prints desconnection users on console
   socket.on('disconnect', () => {
-    connections.splice(connections.indexOf(socket), 1);
-    console.log('Socket disconnected: ' + connections.length + ' sockets connected.');
+    delete list_users[socket.id]
+    io.emit('activeSessions', list_users)
+    console.log('user disconnected: ' + socket.id);
   });
 });
 
@@ -38,6 +61,9 @@ app.get("/", (_req, res) => {
 app.get('/index', (_req, res) => {
   res.sendFile(path.join(__dirname, '../src', '/www', 'index.html'));
 });
+app.get('/register', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../src', '/www', 'register.html'));
+});
 
 //When localhost:3000/chat.js, locate and send chat.js file
 app.get('/chat.js', (_req, res) => {
@@ -46,6 +72,10 @@ app.get('/chat.js', (_req, res) => {
 
 app.get('/login.js', (_req, res) => {
   res.sendFile(path.join(__dirname, '../dist', '/www', '/ts', 'login.js'));
+});
+
+app.get('/register.js', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', '/www', '/ts', 'register.js'));
 });
 
 app.use(express.json());

@@ -55,3 +55,12 @@ export const updateUser = async (userId: string, updatedUser: Partial<User>): Pr
         throw new Error("Error updating user: " + error)
     }
 }
+
+export const deleteUser = async (id: string): Promise<String | null> => {
+    try{
+        const user = await UserModel.findByIdAndDelete({ _id: id});
+        return "User deleted correctly";
+    } catch(error) {
+        throw new Error("Error deleting user: " + error);
+    }
+}

@@ -140,5 +140,20 @@ router.post("/login", [(0, express_validator_1.body)("email").isEmail().notEmpty
     }
     return;
 }));
+router.delete("/:id", [(0, express_validator_1.param)("id").isString()], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const errors = (0, express_validator_1.validationResult)(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const id = req.params.id;
+    const user = yield userServices.deleteUser(id);
+    if (user) {
+        res.json(user);
+    }
+    else {
+        res.status(404).json({ message: "User not found" });
+    }
+    return;
+}));
 exports.default = router;
 //# sourceMappingURL=user.js.map

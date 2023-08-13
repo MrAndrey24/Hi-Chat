@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.addUser = exports.userLogin = exports.getUserByEmail = exports.getUserById = exports.getUser = void 0;
+exports.deleteUser = exports.updateUser = exports.addUser = exports.userLogin = exports.getUserByEmail = exports.getUserById = exports.getUser = void 0;
 const user_1 = require("../models/user");
 const getUser = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -72,4 +72,14 @@ const updateUser = (userId, updatedUser) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.updateUser = updateUser;
+const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield user_1.UserModel.findByIdAndDelete({ _id: id });
+        return "User deleted correctly";
+    }
+    catch (error) {
+        throw new Error("Error deleting user: " + error);
+    }
+});
+exports.deleteUser = deleteUser;
 //# sourceMappingURL=userServices.js.map

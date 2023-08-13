@@ -22,20 +22,40 @@ const socket_io_1 = require("socket.io");
 const app = (0, express_1.default)();
 const server = require("http").createServer(app);
 const io = new socket_io_1.Server(server);
-var connections = [];
-var users = [];
+const list_users = {};
 //Detects new connection and executes content
 io.on('connection', (socket) => {
-    connections.push(socket);
-    console.log('New socket: ' + connections.length + ' sockets connected.');
+    console.log('a user connected: ' + socket.id);
+    // login
+    socket.on('login', ({ email, password }) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const response = yield fetch('http://localhost:3000/api/v1/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            if (response.ok) {
+                const user = yield response.json();
+                socket.emit('login', { user });
+            }
+            const error = yield response.json();
+            socket.emit('login', { error });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }));
     //Prints msg on emit('message') in chat.js
-    socket.on('message', (message) => {
-        io.emit('messageFromServer', { message });
+    socket.on('sendMessage', (message) => {
+        io.emit('sendMessage', { message });
     });
-    //On disconnect, print msg
+    // Prints desconnection users on console
     socket.on('disconnect', () => {
-        connections.splice(connections.indexOf(socket), 1);
-        console.log('Socket disconnected: ' + connections.length + ' sockets connected.');
+        delete list_users[socket.id];
+        io.emit('activeSessions', list_users);
+        console.log('user disconnected: ' + socket.id);
     });
 });
 //Shows index.html file as the default/home page
@@ -45,12 +65,18 @@ app.get("/", (_req, res) => {
 app.get('/index', (_req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'index.html'));
 });
+app.get('/register', (_req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'register.html'));
+});
 //When localhost:3000/chat.js, locate and send chat.js file
 app.get('/chat.js', (_req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../dist', '/www', '/ts', 'chat.js'));
 });
 app.get('/login.js', (_req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../dist', '/www', '/ts', 'login.js'));
+});
+app.get('/register.js', (_req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../dist', '/www', '/ts', 'register.js'));
 });
 app.use(express_1.default.json());
 //Routers

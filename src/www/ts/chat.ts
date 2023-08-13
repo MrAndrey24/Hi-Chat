@@ -1,38 +1,22 @@
-const socket = (window as any).io();
+namespace MySocket {
+    const socket = (window as any).io();
 
-class Chat {
-    static io : any;
-    constructor(private cb : Function){
-        socket.on('messageFromServer', this.cb);
-    }
-    emmitMessage(message : string){
-        socket.emit('message', message);
-    }
+    const userMessage = (document.querySelector('#message') as HTMLInputElement);
+    const printMessage = (document.querySelector('#messages') as HTMLLIElement);
+    const btn = (document.querySelector('#sendMessage') as HTMLButtonElement);
+
+    btn.addEventListener('click', () => {
+        const message = userMessage.value;
+        socket.emit('sendMessage', {
+            message: userMessage.value.trim()
+        })
+    });
+
+    socket.on('sendMessage', (message: string, user: string) => {
+        printMessage.insertAdjacentHTML(
+            'beforeend',
+            `<li class="message"><b>${user}</b>: ${message}</li>`
+        )
+        printMessage.scrollTop = printMessage.scrollHeight;
+    });
 }
-
-function messageReceived(response : any){
-    const queryString = window.location.search;
-
-    const urlParams = new URLSearchParams(queryString);
-
-    let parent = document.querySelector("#messages");
-
-    let child = document.createElement("li");
-
-    //TODO: Fix usernames on message display
-
-    child.innerHTML = "<strong>" + urlParams.get('username') + ": </strong>" + response.message;
-    parent?.appendChild(child);
-}
-
-let chat : Chat = new Chat(messageReceived);
-
-document.querySelector("#form")?.addEventListener('submit', (ev) => {
-    ev.preventDefault();
-
-    const message : string = (document.querySelector("#message") as HTMLInputElement).value;
-
-    chat.emmitMessage(message);
-
-    return false;
-});
