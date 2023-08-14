@@ -8,29 +8,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a;
-(_a = document.querySelector('#btn-login')) === null || _a === void 0 ? void 0 : _a.addEventListener("click", function () {
-    const login = {
-        email: document.getElementById('inputEmail').value,
-        password: document.getElementById('inputPassword').value
-    };
-    fetchLogin("http://localhost:3000/api/v1/users/login", login);
-});
-function fetchLogin(url, body) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: { 'Content-Type': 'application/json' }
+var Login;
+(function (Login) {
+    const socket = window.io();
+    const email = document.querySelector("#inputEmail").value;
+    const password = document.querySelector("#inputPassword").value;
+    const btnLogin = document.getElementById('btn-login');
+    // login socket.io 
+    btnLogin === null || btnLogin === void 0 ? void 0 : btnLogin.addEventListener("click", function () {
+        return __awaiter(this, void 0, void 0, function* () {
+            const email = document.getElementById('inputEmail').value;
+            const password = document.getElementById('inputPassword').value;
+            let user = { email: email, password: password };
+            const response = yield fetch('http://localhost:3000/api/v1/users/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(user)
+            });
+            if (response.ok)
+                window.location.href = "http://localhost:3000/www/index.html?username=" + email + "&room=default";
+            if (!response.ok)
+                throw new Error(`Error! status: ${response.status}`);
         });
-        //If request fails throw response status
-        if (!response.ok)
-            throw new Error(`Error! status: ${response.status}`);
-        if (response.status === 200) {
-            //Response from request
-            const result = yield response.json();
-            location.href = "http://localhost:3000/index?username=" + result.name;
-        }
     });
-}
+})(Login || (Login = {}));
 //# sourceMappingURL=login.js.map

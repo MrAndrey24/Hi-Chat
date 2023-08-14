@@ -121,5 +121,23 @@ router.post("/login", [body("email").isEmail().notEmpty(), body("password").isSt
     return
 })
 
+router.delete("/:id",[param("id").isString()], async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const id = req.params.id;
+    const user = await userServices.deleteUser(id);
+
+    if(user) {
+        res.json(user);
+    } else {
+        res.status(404).json({ message: "User not found"})
+    }
+
+    return
+});
+
 
 export default router
