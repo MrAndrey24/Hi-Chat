@@ -4,18 +4,27 @@ import userRouter from "./routes/user";
 import mongoose from "mongoose";
 import path from "path";
 import { Server } from "socket.io";
+const formatMessage = require("./www/ts/messages");
 
 //Creating socket.io server
 const app = express();
 const server = require("http").createServer(app);
 const io = new Server(server);
 
+const users : any = [];
 const list_users: {[usernama: string]: string} = {};
 
 //Detects new connection and executes content
 io.on('connection', (socket) => {
 
-  console.log('a user connected: ' + socket.id);
+  socket.on('joinRoom', ({ username, room }) => {
+    const user = { id:socket.id, username: username, room: room };
+    users.push(user);
+
+    socket.join(user.room);
+
+    console.log('a user connected: ' + socket.id);
+  });
 
   // login
   socket.on('login', async ({ email, password }) => {
@@ -41,8 +50,10 @@ io.on('connection', (socket) => {
   });
   
   //Prints msg on emit('message') in chat.js
-  socket.on('sendMessage', (message : string) => {
-    io.emit('sendMessage', {message});
+  socket.on('chatMessage', (msg : string) => {
+    const user = users.find((user: { id: any; }) => user.id === socket.id);
+
+    io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
 
   // Prints desconnection users on console

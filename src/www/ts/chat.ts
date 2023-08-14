@@ -1,22 +1,37 @@
-namespace MySocket {
-    const socket = (window as any).io();
+const socket = (window as any).io();
 
-    const userMessage = (document.querySelector('#message') as HTMLInputElement);
-    const printMessage = (document.querySelector('#messages') as HTMLLIElement);
-    const btn = (document.querySelector('#sendMessage') as HTMLButtonElement);
+const chatMessages = document.querySelector('.chat-messages');
 
-    btn.addEventListener('click', () => {
-        const message = userMessage.value;
-        socket.emit('sendMessage', {
-            message: userMessage.value.trim()
-        })
-    });
+const chatForm = document.getElementById('form');
 
-    socket.on('sendMessage', (message: string, user: string) => {
-        printMessage.insertAdjacentHTML(
-            'beforeend',
-            `<li class="message"><b>${user}</b>: ${message}</li>`
-        )
-        printMessage.scrollTop = printMessage.scrollHeight;
-    });
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const username = urlParams.get('username');
+const room = urlParams.get('room');
+
+socket.emit('joinRoom', { username, room});
+
+socket.on('message', (message : string) => {
+    console.log(message);
+    outputMessage(message);
+});
+
+chatForm?.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const msg = document.getElementById('msg') as HTMLInputElement;
+
+    socket.emit('chatMessage', msg.value);
+
+    msg.value = '';
+    msg.focus();
+});
+
+function outputMessage(message : any) {
+    const div = document.createElement('div');
+    div.classList.add('message');
+    div.innerHTML = `<p><strong>${message.username}<strong/> ${message.time}</p>
+                     <p class="text"> ${message.text} </p>`;
+
+    document.querySelector('.chat-messages')?.appendChild(div);
 }
