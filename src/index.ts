@@ -53,16 +53,11 @@ io.on('connection', (socket) => {
   });
 });
 
+app.use(express.static(__dirname));
+
 //Shows index.html file as the default/home page
 app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, '../src', '/www', 'login.html'));
-});
-
-app.get('/index', (_req, res) => {
-  res.sendFile(path.join(__dirname, '../src', '/www', 'index.html'));
-});
-app.get('/register', (_req, res) => {
-  res.sendFile(path.join(__dirname, '../src', '/www', 'register.html'));
 });
 
 //When localhost:3000/chat.js, locate and send chat.js file

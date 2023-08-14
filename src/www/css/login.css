@@ -1,0 +1,27 @@
+body {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.hiChat {
+    display: inline-block;
+    padding-top: 40px;
+}
+
+.hiChat-title {
+    letter-spacing: 5px;
+    border-right: 5px solid;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: 
+        typing 1s steps(8),
+        cursor .4s step-end infinite alternate;
+}
+
+@keyframes cursor {
+    50% { border-color: transparent }
+}
+
+@keyframes typing {
+    from { width: 0 }
+}

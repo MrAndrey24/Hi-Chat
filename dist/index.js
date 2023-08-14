@@ -58,15 +58,10 @@ io.on('connection', (socket) => {
         console.log('user disconnected: ' + socket.id);
     });
 });
+app.use(express_1.default.static(__dirname));
 //Shows index.html file as the default/home page
 app.get("/", (_req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'login.html'));
-});
-app.get('/index', (_req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'index.html'));
-});
-app.get('/register', (_req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'register.html'));
 });
 //When localhost:3000/chat.js, locate and send chat.js file
 app.get('/chat.js', (_req, res) => {
