@@ -24,7 +24,7 @@ var Login;
             });
             if (response.ok) {
                 const data = yield response.json();
-                const username = data.name;
+                const username = data;
                 window.location.href = "https://hi-chat.azurewebsites.net/index.html?username=" + username + "&room=default";
             }
             if (!response.ok)
