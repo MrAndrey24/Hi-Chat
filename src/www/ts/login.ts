@@ -1,9 +1,5 @@
 namespace Login {
-    const socket = (window as any).io();
-
-    const email = (document.querySelector("#inputEmail") as HTMLInputElement).value;
-    const password = (document.querySelector("#inputPassword") as HTMLInputElement).value;
-
+    
     const btnLogin = document.getElementById('btn-login');
 
     // login socket.io 
