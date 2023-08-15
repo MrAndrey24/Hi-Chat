@@ -9,13 +9,13 @@ namespace Login {
 
         let user = { email: email, password: password};
         
-        const response = await fetch('http://localhost:3000/api/v1/users/login', {
+        const response = await fetch('https://hi-chat.azurewebsites.net/api/v1/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         });
 
-        if(response.ok) window.location.href = "http://localhost:3000/www/index.html?username=" + username + "&room=default";
+        if(response.ok) window.location.href = "https://hi-chat.azurewebsites.net/www/index.html?username=" + username + "&room=default";
 
         if(!response.ok) alert("Email or password incorrect")
     });

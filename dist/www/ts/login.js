@@ -17,13 +17,13 @@ var Login;
             const email = document.getElementById('inputEmail').value;
             const password = document.getElementById('inputPassword').value;
             let user = { email: email, password: password };
-            const response = yield fetch('http://localhost:3000/api/v1/users/login', {
+            const response = yield fetch('https://hi-chat.azurewebsites.net/api/v1/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
             });
             if (response.ok)
-                window.location.href = "http://localhost:3000/www/index.html?username=" + username + "&room=default";
+                window.location.href = "https://hi-chat.azurewebsites.net/www/index.html?username=" + username + "&room=default";
             if (!response.ok)
                 alert("Email or password incorrect");
         });

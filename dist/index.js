@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     // login
     socket.on('login', ({ email, password }) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const response = yield fetch('http://localhost:3000/api/v1/users/login', {
+            const response = yield fetch('https://hi-chat.azurewebsites.net/api/v1/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
