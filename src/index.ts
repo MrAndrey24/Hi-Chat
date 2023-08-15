@@ -98,7 +98,7 @@ app.get('/register.css', (_req, res) =>{
 });
 
 // When localhost:3000/chat, locate and send html files to the client
-app.get('/', (_req, res) =>{
+app.get('/www/', (_req, res) =>{
   res.sendFile(path.join(__dirname, '../src', '/www', 'index.html'));
 });
 
@@ -106,7 +106,7 @@ app.get('/', (_req, res) =>{
   res.sendFile(path.join(__dirname, '../src', '/www', 'login.html'));
 });
 
-app.get('/', (_req, res) =>{
+app.get('/www/', (_req, res) =>{
   res.sendFile(path.join(__dirname, '../src', '/www', 'register.html'));
 });
 
