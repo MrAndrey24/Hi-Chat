@@ -10,9 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var Login;
 (function (Login) {
-    const socket = window.io();
-    const email = document.querySelector("#inputEmail").value;
-    const password = document.querySelector("#inputPassword").value;
     const btnLogin = document.getElementById('btn-login');
     // login socket.io 
     btnLogin === null || btnLogin === void 0 ? void 0 : btnLogin.addEventListener("click", function () {
@@ -26,9 +23,9 @@ var Login;
                 body: JSON.stringify(user)
             });
             if (response.ok)
-                window.location.href = "http://localhost:3000/www/index.html?username=" + email + "&room=default";
+                window.location.href = "http://localhost:3000/www/index.html?username=" + username + "&room=default";
             if (!response.ok)
-                throw new Error(`Error! status: ${response.status}`);
+                alert("Email or password incorrect");
         });
     });
 })(Login || (Login = {}));

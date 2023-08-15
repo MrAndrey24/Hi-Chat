@@ -1,5 +1,5 @@
 namespace Login {
-    
+
     const btnLogin = document.getElementById('btn-login');
 
     // login socket.io 
@@ -17,6 +17,6 @@ namespace Login {
 
         if(response.ok) window.location.href = "http://localhost:3000/www/index.html?username=" + username + "&room=default";
 
-        if(!response.ok) throw new Error(`Error! status: ${response.status}`);
+        if(!response.ok) alert("Email or password incorrect")
     });
 }

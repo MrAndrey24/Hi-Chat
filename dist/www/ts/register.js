@@ -10,13 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var Register;
 (function (Register) {
-    const socket = window.io();
     const btnRegister = document.getElementById('btn-register');
     btnRegister === null || btnRegister === void 0 ? void 0 : btnRegister.addEventListener("click", function () {
         return __awaiter(this, void 0, void 0, function* () {
             const userName = document.getElementById('inputUserName').value;
             const email = document.getElementById('inputEmail').value;
             const password = document.getElementById('inputPassword').value;
+            if (userName === "" || email === "" || password === "")
+                return alert("Please fill in all fields");
+            if (password.length <= 5)
+                return alert("Password must be at least 5 characters");
             let user = { name: userName, email: email, password: password };
             const response = yield fetch('http://localhost:3000/api/v1/users', {
                 method: 'POST',
@@ -26,7 +29,7 @@ var Register;
             if (response.ok)
                 window.location.href = "http://localhost:3000/";
             if (!response.ok)
-                throw new Error(`Error! status: ${response.status}`);
+                alert("Something went wrong, please try again");
         });
     });
 })(Register || (Register = {}));

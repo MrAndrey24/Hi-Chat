@@ -1,5 +1,4 @@
 namespace Register {
-    const socket = (window as any).io();
 
     const btnRegister = document.getElementById('btn-register');
 
@@ -7,6 +6,10 @@ namespace Register {
         const userName = (document.getElementById('inputUserName') as HTMLInputElement).value;
         const email = (document.getElementById('inputEmail') as HTMLInputElement).value;
         const password = (document.getElementById('inputPassword') as HTMLInputElement).value;
+
+        if(userName ==="" || email === "" || password === "") return alert("Please fill in all fields");
+
+        if(password.length <= 5) return alert("Password must be at least 5 characters");
 
         let user = { name: userName, email: email, password: password};
         
@@ -18,6 +21,6 @@ namespace Register {
 
         if(response.ok) window.location.href = "http://localhost:3000/";
 
-        if(!response.ok) throw new Error(`Error! status: ${response.status}`);
+        if(!response.ok) alert("Something went wrong, please try again")
     });
 }
