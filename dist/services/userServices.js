@@ -9,42 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.addUser = exports.userLogin = exports.getUserByEmail = exports.getUserById = exports.getUser = void 0;
+exports.addUser = exports.userLogin = void 0;
 const user_1 = require("../models/user");
-const getUser = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const users = yield user_1.UserModel.find();
-        return users;
-    }
-    catch (error) {
-        throw new Error("Error getting user: " + error);
-    }
-});
-exports.getUser = getUser;
-const getUserById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield user_1.UserModel.findOne({ _id: id });
-        return user;
-    }
-    catch (error) {
-        throw new Error("Error getting user: " + error);
-    }
-});
-exports.getUserById = getUserById;
-const getUserByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield user_1.UserModel.findOne({ email: email });
-        return user;
-    }
-    catch (error) {
-        throw new Error("Error getting user: " + error);
-    }
-});
-exports.getUserByEmail = getUserByEmail;
 const userLogin = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield user_1.UserModel.findOne({ email: email, password: password });
-        return user;
+        if (user) {
+            return user.name;
+        }
+        return null;
     }
     catch (error) {
         throw new Error("Error getting user: " + error);
@@ -62,24 +35,4 @@ const addUser = (newUser) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.addUser = addUser;
-const updateUser = (userId, updatedUser) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield user_1.UserModel.findOneAndUpdate({ _id: userId }, { $set: updatedUser }, { new: true });
-        return user;
-    }
-    catch (error) {
-        throw new Error("Error updating user: " + error);
-    }
-});
-exports.updateUser = updateUser;
-const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield user_1.UserModel.findByIdAndDelete({ _id: id });
-        return "User deleted correctly";
-    }
-    catch (error) {
-        throw new Error("Error deleting user: " + error);
-    }
-});
-exports.deleteUser = deleteUser;
 //# sourceMappingURL=userServices.js.map
