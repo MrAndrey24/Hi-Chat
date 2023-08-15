@@ -19,7 +19,7 @@ namespace Login {
             body: JSON.stringify(user)
         });
 
-        if(response.ok) window.location.href = "http://localhost:3000/www/index.html?username=" + email + "&room=default";
+        if(response.ok) window.location.href = "http://localhost:3000/www/index.html?username=" + username + "&room=default";
 
         if(!response.ok) throw new Error(`Error! status: ${response.status}`);
     });

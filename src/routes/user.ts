@@ -5,46 +5,6 @@ import { UserModel } from '../models/user';
 
 const router = express.Router();
 
-router.get("/", async (_req, res) => {
-    const users = await userServices.getUser()
-    res.send(users)
-})
-
-router.get("/:id", param("id").isString(), async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
-
-    const userId: string = req.params.id
-    const user = await userServices.getUserById(userId);
-    
-    if (user) {
-        res.send(user);
-    } else {
-        res.status(404).json({ message: "User not found" })
-    }
-    return
-})
-
-
-router.get("/email/:email", param("email").isEmail(), async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
-
-    const userEmail: string = req.params.email
-    const user = await userServices.getUserByEmail(userEmail);
-    
-    if (user) {
-        res.send(user);
-    } else {
-        res.status(404).json({ message: "User not found" })
-    }
-    return
-})
-
 
 router.post("/",[body("name").isString().notEmpty(),body("email").isEmail().notEmpty(),body("password").isString().notEmpty().isLength({ min: 5})], async (req: Request, res: Response) => {
 
@@ -76,33 +36,6 @@ router.post("/",[body("name").isString().notEmpty(),body("email").isEmail().notE
     return
 })
 
-router.put("/:id",[param("id").isString(), body("name").optional().isString(), body("email").optional().isEmail(), body("password").optional().isString().isLength({ min: 5})], async (req: Request, res: Response) => {
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-        return res.status(400).json({ errors: errors.array() })
-    }
-
-    const userId: string = req.params.id
-    const {name, email, password} = req.body
-    const updateUser = {
-        name: name,
-        email: email,
-        password: password
-    }
-
-    try{
-        const user = await userServices.updateUser(userId, updateUser)
-        if(user){
-        res.json(user)
-        }
-        return res.status(404).json({ message: "User not found"})
-    }catch(error){
-        console.log("Error updating user: " + error)
-    }
-
-    return
-})
-
 
 router.post("/login", [body("email").isEmail().notEmpty(), body("password").isString().notEmpty()], async (req: Request, res: Response) => {
     const errors = validationResult(req)
@@ -120,24 +53,6 @@ router.post("/login", [body("email").isEmail().notEmpty(), body("password").isSt
 
     return
 })
-
-router.delete("/:id",[param("id").isString()], async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    const id = req.params.id;
-    const user = await userServices.deleteUser(id);
-
-    if(user) {
-        res.json(user);
-    } else {
-        res.status(404).json({ message: "User not found"})
-    }
-
-    return
-});
 
 
 export default router
