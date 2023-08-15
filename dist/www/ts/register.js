@@ -21,13 +21,13 @@ var Register;
             if (password.length <= 5)
                 return alert("Password must be at least 5 characters");
             let user = { name: userName, email: email, password: password };
-            const response = yield fetch('http://localhost:3000/api/v1/users', {
+            const response = yield fetch('https://hi-chat.azurewebsites.net/api/v1/users', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
             });
             if (response.ok)
-                window.location.href = "http://localhost:3000/";
+                window.location.href = "https://hi-chat.azurewebsites.net/";
             if (!response.ok)
                 alert("Something went wrong, please try again");
         });

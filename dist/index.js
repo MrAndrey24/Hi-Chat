@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     // login
     socket.on('login', ({ email, password }) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const response = yield fetch('https://hi-chat.azurewebsites.net/api/v1/users/login', {
+            const response = yield fetch('http://localhost:3000/api/v1/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,15 +81,18 @@ app.get('/login.js', (_req, res) => {
 app.get('/register.js', (_req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../dist', '/www', '/ts', 'register.js'));
 });
-// When localhost:3000/chat, locate and send css files to the client
-app.get('/index.css', (_req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../src', '/www', '/css', 'index.css'));
+app.get('/index.html', (_req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../dist', '/www', 'index.html'));
 });
-app.get('/login.css', (_req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../src', '/www', '/css', 'login.css'));
+// When localhost:3000/chat, locate and send html files to the client
+app.get('/www/', (_req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'index.html'));
 });
-app.get('/register.css', (_req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../src', '/www', '/css', 'register.css'));
+app.get('/', (_req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'login.html'));
+});
+app.get('/www/', (_req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'register.html'));
 });
 app.use(express_1.default.json());
 //Routers
