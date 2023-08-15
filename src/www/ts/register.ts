@@ -13,13 +13,13 @@ namespace Register {
 
         let user = { name: userName, email: email, password: password};
         
-        const response = await fetch('http://localhost:3000/api/v1/users', {
+        const response = await fetch('https://hi-chat.azurewebsites.net/api/v1/users', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         });
 
-        if(response.ok) window.location.href = "http://localhost:3000/";
+        if(response.ok) window.location.href = "https://hi-chat.azurewebsites.net/";
 
         if(!response.ok) alert("Something went wrong, please try again")
     });

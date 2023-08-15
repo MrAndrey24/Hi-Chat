@@ -18,7 +18,7 @@ namespace Login {
         if(response.ok){
             const data = await response.json();
             const username = data.name;
-            window.location.href = "https://hi-chat.azurewebsites.net/www/index.html?username=" + username + "&room=default";
+            window.location.href = "https://hi-chat.azurewebsites.net/index.html?username=" + username + "&room=default";
         }
 
         if(!response.ok) alert("Email or password incorrect")

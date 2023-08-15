@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
   // login
   socket.on('login', async ({ email, password }) => {
     try{
-      const response = await fetch('https://hi-chat.azurewebsites.net/api/v1/users/login', {
+      const response = await fetch('http://localhost:3000/api/v1/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -84,17 +84,8 @@ app.get('/register.js', (_req, res) => {
   res.sendFile(path.join(__dirname, '../dist', '/www', '/ts', 'register.js'));
 });
 
-// When localhost:3000/chat, locate and send css files to the client
-app.get('/index.css', (_req, res) =>{
-  res.sendFile(path.join(__dirname, '../src', '/www', '/css', 'index.css'));
-})
-
-app.get('/login.css', (_req, res) =>{
-  res.sendFile(path.join(__dirname, '../src', '/www', '/css', 'login.css'));
-});
-
-app.get('/register.css', (_req, res) =>{
-  res.sendFile(path.join(__dirname, '../src', '/www', '/css', 'register.css'));
+app.get('/index.html', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', '/www', 'index.html'));
 });
 
 app.use(express.json());
