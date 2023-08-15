@@ -22,8 +22,11 @@ var Login;
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
             });
-            if (response.ok)
+            if (response.ok) {
+                const data = yield response.json();
+                const username = data.name;
                 window.location.href = "https://hi-chat.azurewebsites.net/www/index.html?username=" + username + "&room=default";
+            }
             if (!response.ok)
                 alert("Email or password incorrect");
         });
