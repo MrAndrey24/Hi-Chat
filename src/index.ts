@@ -88,6 +88,19 @@ app.get('/index.html', (_req, res) => {
   res.sendFile(path.join(__dirname, '../dist', '/www', 'index.html'));
 });
 
+// When localhost:3000/chat, locate and send html files to the client
+app.get('/www/', (_req, res) =>{
+  res.sendFile(path.join(__dirname, '../src', '/www', 'index.html'));
+});
+
+app.get('/', (_req, res) =>{
+  res.sendFile(path.join(__dirname, '../src', '/www', 'login.html'));
+});
+
+app.get('/www/', (_req, res) =>{
+  res.sendFile(path.join(__dirname, '../src', '/www', 'register.html'));
+});
+
 app.use(express.json());
 
 //Routers
