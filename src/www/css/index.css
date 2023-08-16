@@ -1,10 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto Mono", monospace;
 }
+
 body {
   display: flex;
   justify-content: center;
@@ -12,6 +14,7 @@ body {
   min-height: 100vh;
   background: #000;
 }
+
 section {
   position: absolute;
   width: 100vw;
@@ -23,6 +26,7 @@ section {
   flex-wrap: wrap;
   overflow: hidden;
 }
+
 section::before {
   content: "";
   position: absolute;
@@ -31,6 +35,7 @@ section::before {
   background: linear-gradient(#000, #0f0, #000);
   animation: animate 5s linear infinite;
 }
+
 @keyframes animate {
   0% {
     transform: translateY(-100%);
@@ -39,6 +44,7 @@ section::before {
     transform: translateY(100%);
   }
 }
+
 section span {
   position: relative;
   display: block;
@@ -48,6 +54,7 @@ section span {
   z-index: 2;
   transition: 1.5s;
 }
+
 section span:hover {
   background: #0f0;
   transition: 0s;
@@ -64,7 +71,11 @@ section .signin {
   padding: 40px;
   border-radius: 4px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 9);
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
 }
+
 section .signin .content {
   position: relative;
   width: 100%;
@@ -74,21 +85,25 @@ section .signin .content {
   flex-direction: column;
   gap: 40px;
 }
+
 section .signin .content h2 {
   font-size: 2em;
   color: #0f0;
   text-transform: uppercase;
 }
+
 section .signin .content .form {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 25px;
 }
+
 section .signin .content .form .inputBox {
   position: relative;
   width: 100%;
 }
+
 section .signin .content .form .inputBox input {
   position: relative;
   width: 100%;
@@ -101,6 +116,7 @@ section .signin .content .form .inputBox input {
   font-weight: 500;
   font-size: 1em;
 }
+
 section .signin .content .form .inputBox i {
   position: absolute;
   left: 0;
@@ -110,26 +126,31 @@ section .signin .content .form .inputBox i {
   transition: 0.5s;
   pointer-events: none;
 }
+
 .signin .content .form .inputBox input:focus ~ i,
 .signin .content .form .inputBox input:valid ~ i {
   transform: translateY(-7.5px);
   font-size: 0.8em;
   color: #fff;
 }
+
 .signin .content .form .links {
   position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
+
 .signin .content .form .links a {
   color: #fff;
   text-decoration: none;
 }
+
 .signin .content .form .links a:nth-child(2) {
   color: #0f0;
   font-weight: 600;
 }
+
 .signin .content .form .inputBox input[type="submit"] {
   padding: 10px;
   background: #0f0;
@@ -139,15 +160,18 @@ section .signin .content .form .inputBox i {
   letter-spacing: 0.05em;
   cursor: pointer;
 }
+
 input[type="submit"]:active {
   opacity: 0.6;
 }
+
 @media (max-width: 900px) {
   section span {
     width: calc(10vw - 2px);
     height: calc(10vw - 2px);
   }
 }
+
 @media (max-width: 600px) {
   section span {
     width: calc(20vw - 2px);
@@ -162,6 +186,8 @@ input[type="submit"]:active {
   border-radius: 4px;
   margin: 5px 0;
   color: white;
+  width: 100%; /* Ocupar todo el ancho disponible */
+  word-wrap: break-word; /* Romper las palabras largas */
 }
 
 .message p {
@@ -179,13 +205,6 @@ input[type="submit"]:active {
 }
 
 /* Estilo para la sección del chat de mensajes */
-section .signin {
-  /* ... tus otros estilos ... */
-  flex-direction: column; /* Cambio en la dirección de flexión */
-  gap: 20px; /* Espacio entre los elementos del formulario */
-  align-items: flex-start; /* Alineación del contenido a la izquierda */
-}
-
 section .signin .content .chat-messages {
   background-color: #333;
   padding: 10px;
@@ -199,18 +218,13 @@ section .signin .content .chat-messages .message {
 }
 
 /* Ajuste en el estilo del formulario */
-section .signin .content .form .inputBox {
+section .signin .content .form .chat-messages .inputBox {
   position: relative;
   width: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
   margin-top: auto; /* Empujar el formulario hacia la parte inferior */
-}
-
-/* Ajuste en el tamaño de los íconos para mejor apariencia */
-.signin .content .form .inputBox i {
-  font-size: 1.2em;
 }
 
 /* Ajuste en el tamaño de los íconos en el input para mensajes */
@@ -220,7 +234,7 @@ section .signin .content .form .inputBox {
 }
 
 /* Cambio en el estilo del botón de enviar */
-.signin .content .form .inputBox input[type="submit"] {
+.signin .content .form .chat-messages .inputBox input[type="submit"] {
   padding: 10px;
   background: #0f0;
   color: #000;
