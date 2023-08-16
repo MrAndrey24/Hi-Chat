@@ -187,6 +187,7 @@ input[type="submit"]:active {
   margin: 5px 0;
   color: white;
   width: 100%; /* Ocupar todo el ancho disponible */
+  word-wrap: break-word; /* Romper las palabras largas */
 }
 
 .message p {
