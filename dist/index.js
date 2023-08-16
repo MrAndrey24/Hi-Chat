@@ -84,6 +84,9 @@ app.get('/register.js', (_req, res) => {
 app.get('/index.html', (_req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'index.html'));
 });
+app.get('/register.html', (_req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'register.html'));
+});
 // When localhost:3000/chat, locate and send html files to the client
 app.get('/', (_req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../src', '/www', 'login.html'));
